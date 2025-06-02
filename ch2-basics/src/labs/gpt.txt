@@ -1,0 +1,123 @@
+[변동값, 변동값 제어용 함수] 쌍으로 이루어진 변수에 useState(초기값)을 대입해주는 것으로
+
+값에 변동이 있을 때마다 일일이 모든 것을 통제할 필요 없이
+제어함수로 변동만 시켜주면 모든게 알아서 최적화된 방식으로 처리된다는 거지?
+
+
+
+✅ useState의 본질
+js
+복사
+편집
+const [value, setValue] = useState(initialValue);
+이 선언은 2가지 역할을 만들어줘:
+
+React 컴포넌트 안에서 관리되는 상태값 → value
+
+그 상태를 안전하게 업데이트하는 함수 → setValue
+
+✅ 뭐가 대단한가?
+내가 직접 DOM에 접근하거나 화면을 다시 그릴 필요 없음
+
+값이 바뀌면:
+
+React가 그걸 감지
+
+Virtual DOM에서 이전 화면과 새로운 화면을 비교(diffing)
+
+바뀐 부분만 똑똑하게 실제 DOM에 적용(patching)
+
+결국 최소한의 노력으로 최대한의 안전성을 확보하는 거야.
+
+
+
+
+✅ 포인트 정리
+
+useState<string[]>([]) → string 배열 상태 선언
+
+setItems([...items, newItem]) → 배열을 불변성 유지하며 업데이트
+(절대 items.push(newItem)처럼 직접 수정하면 안 돼)
+
+배열뿐만 아니라 객체 상태도 비슷한 방식으로 관리할 수 있어.
+필요하면 객체용 예제도 만들어줄까? 🚀
+
+
+✅ 한 줄 요약
+
+const newNumbers = [...numbers, 5];
+→ [1, 2, 3, 4] → [1, 2, 3, 4, 5]
+spread 문법(...)으로 기존 배열을 복사하고 맨 끝에 새 값을 붙이는 거야.
+
+
+
+🔍 설명
+numbers.filter((_, i) => i !== index)
+→ 해당 인덱스를 제외한 값들로 새 배열을 만들어 줌.
+
+setNumbers(newNumbers)
+→ 새 배열로 상태를 갱신.
+
+⚠ 주의
+
+절대 numbers.splice() 같은 원본 배열을 직접 바꾸는 방식은 쓰지 말 것.
+
+React는 배열 참조가 변하지 않으면 상태 업데이트로 인식하지 않음.
+
+
+
+✨ 요약
+✅ 입력 값 추적 → onChange 이벤트
+✅ 추가 버튼 클릭 → onClick 이벤트
+✅ 삭제 버튼 클릭 → onClick 이벤트
+
+
+
+나의 말:
+onChange 이벤트로 실시간으로 인풋값을 받아둔 상태에서
+버튼의 onClick 이벤트로 유저가 원하는 때에 배열에 새 값을 추가하는 2단 구조인가?
+
+
+
+1️⃣ onChange로 input 값 실시간 추적
+<input>에 입력할 때마다
+→ onChange 이벤트로 값 변화를 잡아냄
+→ useState로 inputText 같은 상태 변수에 저장
+
+js
+<input
+  value={inputText}
+  onChange={(e) => setInputText(e.target.value)}
+/>
+이때 배열에는 아무 영향도 안 줘!
+단지 현재 입력 중인 값만 기억하고 있는 상태야.
+
+2️⃣ 버튼 클릭으로 배열 상태에 새 항목 추가
+사용자가 추가 버튼을 눌렀을 때
+→ 현재 inputText 값을
+→ todos 배열 상태에 추가
+
+
+
+
+<input
+                value={inputText}
+                onChange={(e) => setInputText(e.target.value)} // ✅ 여기!
+            />
+
+value={inputText} 도 실시간 추적을 위해 필요한 부분이야?
+
+
+
+좋은 질문이야! 👀
+
+✅ 네, value={inputText}는 실시간 추적에 꼭 필요해.
+
+왜냐면 React의 <input>은 **controlled component (제어 컴포넌트)**로 동작하게 설계할 때,
+value를 상태값(inputText)로 묶어줘야
+React가 input의 실제 값을 완전히 컨트롤할 수 있어.
+
+🔍 왜 value={inputText}가 필요한가?
+onChange만 쓰고 value를 안 쓰면 → HTML input이 자유롭게 값 변경
+
+하지만 value를 상태값으로 묶으면 → React가 상태 기준으로 input 값 유지

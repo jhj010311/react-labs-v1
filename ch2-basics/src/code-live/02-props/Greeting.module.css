@@ -1,0 +1,5 @@
+/* 특정 파일 전용 css 모듈을 만들 수 있다 */
+
+.hello {
+    color: yellow;
+}

@@ -18,13 +18,16 @@ export default tseslint.config(
             "react-refresh": reactRefresh,
         },
         rules: {
+            // 문법 오류 잡아주는 파트, 잘 체크할 것
+            // 팀 내에서 공유하는 로컬룰을 만들 수도 있음
             ...reactHooks.configs.recommended.rules,
             "react-refresh/only-export-components": [
                 "warn",
                 { allowConstantExport: true },
             ],
-            "@typescript-eslint/no-unused-vars": "off",
-            "no-var": "warn",
+            // "@typescript-eslint/no-unused-vars": "off",
+            // "no-var": "warn",
+            // 예시
         },
     }
 );
