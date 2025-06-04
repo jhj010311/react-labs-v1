@@ -8,6 +8,7 @@ import UserList from "./labs/02-props/UserList";
 import Welcome from "./labs/02-props/Welcome";
 import Wrapper from "./labs/02-props/Wrapper";
 import TodoListLab from "./labs/03-state-events/TodoListLab";
+import UserListLab from "./labs/03-state-events/UserListLab";
 
 function App() {
     return (
@@ -50,6 +51,9 @@ function App() {
 
             <h1>lab3-3 TodoList</h1>
             <TodoListLab />
+
+            <h1>lab3-4 UserList</h1>
+            <UserListLab />
         </>
     );
 }
