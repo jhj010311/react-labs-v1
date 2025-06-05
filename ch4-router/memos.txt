@@ -1,0 +1,17 @@
+Route 관련 태그들
+<BrowserRouter>
+    <Routes>
+        <Route path="/" element={<HomePage />} />
+    </Routes>
+</BrowserRouter>
+
+<Link to={"/"}>Home</Link>
+
+<Route path="/posts/:id" element={<PostDetailPage />} />
+
+const navigate = useNavigate();
+
+// 쿼리스트링(=쿼리파라미터)으로 값 넘겨주기
+navigate(`/result?q=${encodeURIComponent(input)}`);
+
+const [searchParams] = useSearchParams();
